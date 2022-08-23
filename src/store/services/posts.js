@@ -9,8 +9,15 @@ export const postsApi = createApi({
                 url: 'posts',
                 method: 'GET'
             })
+        }),
+        getComments: builder.query({
+            query: (postId) => ({
+                url: 'comments',
+                method: 'GET',
+                params: postId
+            })
         })
     })
 })
 
-export const { useGetPostsQuery } = postsApi
+export const { useGetPostsQuery, useGetCommentsQuery } = postsApi
