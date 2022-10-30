@@ -1,20 +1,18 @@
-import { useEffect, useMemo, useState } from 'react';
-import './App.css';
-import { useGetCommentsQuery, useGetPostsQuery } from './store/services/posts';
+import React from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Header from './components/Header';
+import Album from './pages/Album';
+import Main from './pages/Main';
 
 function App() {
-
-  const [id, setId] = useState(null);
-  const { data: commentData, refetch: commentRefetch } = useGetCommentsQuery(
-    id !== null && { postId : id }
-  );
-  const commentList = useMemo(() => commentData, [commentData]);
-
-  const { data: postData, refetch: postRefetch } = useGetPostsQuery(null);
-  const [post, setPost] = useState(postData && postData);
-
   return (
-    <div className="App"></div>
+    <BrowserRouter>
+      <Header />
+      <Routes>
+        <Route path="/" element={<Main />} />
+        <Route path="/album" element={<Album />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
