@@ -13,11 +13,11 @@ export const commentsApi = createApi({
     reducerPath: 'commentsApi',
     baseQuery: baseQuery,
     endpoints: (builder) => ({
-        getComments: builder.query<CommentType, { param: string }>({
-            query: (params) => ({
-                url: 'comments',
+        getComments: builder.query({
+            query: (postId) => ({
+                url: `comments`,
                 method: 'GET',
-                params: params
+                params: {...postId}
             })
         }) 
     })

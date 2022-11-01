@@ -7,6 +7,7 @@ export interface UserType {
     phone: string;
     username: string;
     website: string;
+    email: string;
     address: {
         city: string;
         geo: { lat: number, lng: number }

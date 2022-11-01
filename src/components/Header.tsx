@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from '@emotion/styled';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import { Link, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const Container = styled.header`
     width: 100%;
@@ -19,12 +19,23 @@ const Nav = styled.nav`
 const Header = () => {
 
     const navigate = useNavigate();
+    const location = useLocation();
+    // console.log(location.pathname);
 
     const [tabIndex, setTabIndex] = useState(0);
 
     const handleTab = (e: React.SyntheticEvent, index: number) => {
         setTabIndex(index);
     };
+
+    const handleTabIndex = () => {
+        location.pathname === '/' && setTabIndex(0);
+        location.pathname === '/album' && setTabIndex(1);
+    }
+
+    useEffect(() => {
+        handleTabIndex();
+    }, [])
 
     return (
         <Container>
