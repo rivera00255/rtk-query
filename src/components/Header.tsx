@@ -30,7 +30,8 @@ const Header = () => {
 
     const handleTabIndex = () => {
         location.pathname === '/' && setTabIndex(0);
-        location.pathname === '/album' && setTabIndex(1);
+        location.pathname === '/photo' && setTabIndex(1);
+        location.pathname === '/todo' && setTabIndex(2);
     }
 
     useEffect(() => {
@@ -42,9 +43,8 @@ const Header = () => {
             <Nav>
                 <Tabs value={tabIndex} onChange={handleTab}>
                     <Tab label="Post" onClick={() => navigate('/')} />
-                    <Tab label="Album" onClick={() =>  navigate('/album')} />
-                    <Tab label="Photo" />
-                    <Tab label="MyPage" />
+                    <Tab label="Photo" onClick={() =>  navigate('/photo')} />
+                    <Tab label="todo" onClick={() => navigate('/todo')} />
                 </Tabs>
             </Nav>
         </Container>

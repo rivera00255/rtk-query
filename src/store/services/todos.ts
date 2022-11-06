@@ -1,23 +1,24 @@
 import { createApi } from "@reduxjs/toolkit/dist/query/react";
 import { baseQuery } from ".";
 
-export interface AlbumType {
+export interface TodoType {
     id: number;
-    title: string;
     userId: number;
+    title: string;
+    completed: boolean;
 }
 
-export const albumsApi = createApi({
-    reducerPath: 'albumsApi',
+export const todosApi = createApi({
+    reducerPath: 'todosApi',
     baseQuery: baseQuery,
     endpoints: (builder) => ({
-        getAlbums: builder.query({
+        getTodos: builder.query({
             query: () => ({
-                url: 'albums',
+                url: '/todos',
                 method: 'GET'
             })
         })
     })
 })
 
-export const { useGetAlbumsQuery } = albumsApi;
+export const { useGetTodosQuery } = todosApi;

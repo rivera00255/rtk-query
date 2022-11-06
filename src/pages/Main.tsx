@@ -60,7 +60,7 @@ const Main = () => {
                                 { users?.map((user: UserType) => (<p key={user.id} style={{ color: '#1565c0' }}>{item.userId === user.id ? user.username : ''}</p>)) }
                                 <p><strong style={{ fontSize: '1.1rem'}}>{item.title}</strong></p>
                             </CardContent>
-                            <CardActions style={{ display: 'flex', justifyContent: 'right' }}>
+                            {/* <CardActions style={{ display: 'flex', justifyContent: 'right' }}>
                                 <IconButton aria-label="show more" style={{ transform: !expanded.includes(item.id) ? 'rotate(0deg)' : 'rotate(180deg)', transition: '0.5s' }} onClick={() => {
                                     // setExpanded(!expanded);
                                     if(!expanded.includes(item.id)) {
@@ -72,7 +72,7 @@ const Main = () => {
                             </CardActions>
                             <Collapse in={expanded.includes(item.id) ? true : false} timeout="auto" unmountOnExit>
                                 <CardContent>{item.body}</CardContent>
-                            </Collapse>
+                            </Collapse> */}
                         </Card>
                     ))
                 }
