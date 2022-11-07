@@ -27,9 +27,10 @@ export const usersApi = createApi({
     baseQuery: baseQuery,
     endpoints: (builder) => ({
       getUsers: builder.query({
-        query: () => ({
+        query: (id) => ({
             url: 'users',
-            method: 'GET'
+            method: 'GET',
+            params: {...id}
         })
       }),
     }),

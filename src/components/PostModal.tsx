@@ -1,7 +1,8 @@
 import React, { Dispatch, SetStateAction, useMemo, useRef, useEffect } from 'react';
 import styled from '@emotion/styled';
-import { PostContentType } from 'src/pages/Main';
 import { CommentType, useGetCommentsQuery } from 'src/store/services/comments';
+import { PostType } from 'src/store/services/posts';
+import { PostContentType } from 'src/pages/Main';
 
 const Container = styled.div`
     width: 100%;
@@ -58,7 +59,7 @@ const PostModal = (props : { popup: boolean, setPopup: Dispatch<SetStateAction<b
 
     const modalRef: any = useRef(null);
 
-    const { data: commentData } = useGetCommentsQuery({ postId: selected.postId });
+    const { data: commentData, isLoading } = useGetCommentsQuery({ postId: selected.postId });
     const comments = useMemo(() => commentData, [commentData]);
     // console.log(comments);
 
@@ -86,6 +87,7 @@ const PostModal = (props : { popup: boolean, setPopup: Dispatch<SetStateAction<b
                     <p>{selected.body}</p>
                 </Content>
                 <CommentWrapper>
+                    { isLoading && <Comment>Loading...</Comment> }
                     {
                         comments?.map((item: CommentType) => (
                             <Comment key={item.id}>

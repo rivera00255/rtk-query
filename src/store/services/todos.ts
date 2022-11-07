@@ -14,11 +14,17 @@ export const todosApi = createApi({
     endpoints: (builder) => ({
         getTodos: builder.query({
             query: () => ({
-                url: '/todos',
+                url: 'todos',
                 method: 'GET'
+            })
+        }),
+        editTodoCompleted: builder.mutation({
+            query: (id) => ({
+                url: `todos/${id}`,
+                method: 'PUT'
             })
         })
     })
 })
 
-export const { useGetTodosQuery } = todosApi;
+export const { useGetTodosQuery, useEditTodoCompletedMutation } = todosApi;

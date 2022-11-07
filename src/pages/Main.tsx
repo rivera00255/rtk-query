@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 import styled from '@emotion/styled';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -42,13 +42,18 @@ const Main = () => {
     const [selected, setSelected] = useState<PostContentType | null>(null);
     const [formPopup, setFormPopup] = useState(false);
 
-    const { data: postData, isLoading } = useGetPostsQuery({});
-    const { data: userData } = useGetUsersQuery({});
+    const { data: postData, refetch: postRefetch, isLoading } = useGetPostsQuery({});
+    const { data: userData, refetch: userRefetch } = useGetUsersQuery({});
 
     const posts = useMemo(() => postData, [postData]);
     const users = useMemo(() => userData, [userData]);
-    // console.log(post);
+    // console.log(posts);
     // console.log(users);
+
+    useEffect(() => {
+        postRefetch();
+        userRefetch();
+    }, []);
 
     if (isLoading) { return ( <Container>Loading...</Container> ) } else {
     return (
@@ -57,10 +62,9 @@ const Main = () => {
             { (formPopup === true && <PostFormModal formPopup={formPopup} setFormPopup={setFormPopup} />) }
             <CardWrapper>
                 {
-                    users?.length > 0 &&
                     posts?.map((item: PostType, i: number) => (
                         <Card sx={{ width: 520, margin: 3 }} key={item.id} style={{ cursor: 'pointer' }} onClick={() => {
-                            setSelected((prev) => ({...prev, postId: item.id, title: item.title, body: item.body, username: users[item.userId]?.username }));
+                            setSelected((prev) => ({...prev, postId: item.id, title: item.title, body: item.body, username: users[Number(item.userId) - 1]?.username }));
                             setPopup(true);
                         }}>
                             <CardContent>
