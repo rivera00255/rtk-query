@@ -1,8 +1,9 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
-import Album from './pages/Album';
 import Main from './pages/Main';
+import Photo from './pages/Photo';
+import Todo from './pages/Todo';
 
 function App() {
   return (
@@ -10,7 +11,8 @@ function App() {
       <Header />
       <Routes>
         <Route path="/" element={<Main />} />
-        <Route path="/album" element={<Album />} />
+        <Route path='/photo' element={<Photo />} />
+        <Route path='/todo' element={<Todo />} />
       </Routes>
     </BrowserRouter>
   );

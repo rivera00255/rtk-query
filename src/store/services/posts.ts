@@ -19,13 +19,14 @@ export const postsApi = createApi({
         method: 'GET'
       })
     }),
-    getComment: builder.query<PostType, { postId: number }>({
-      query: (postId) => ({
-        url: `posts/${postId}/comments`,
-        method: 'GET'
+    addPost: builder.mutation({
+      query: (data: { body: string; }) => ({
+        url: 'posts',
+        method: 'POST',
+        body: data
       })
     })
   })
 })
 
-export const { useGetPostsQuery, useGetCommentQuery } = postsApi
+export const { useGetPostsQuery, useAddPostMutation } = postsApi

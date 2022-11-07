@@ -1,23 +1,25 @@
 import { createApi } from "@reduxjs/toolkit/dist/query/react";
 import { baseQuery } from ".";
 
-export interface AlbumType {
+export interface PhotoType {
+    albumId: number;
     id: number;
+    thumbnailUrl: string;
     title: string;
-    userId: number;
+    url: string;
 }
 
-export const albumsApi = createApi({
-    reducerPath: 'albumsApi',
+export const photosApi = createApi({
+    reducerPath: 'photosApi',
     baseQuery: baseQuery,
     endpoints: (builder) => ({
-        getAlbums: builder.query({
+        getPhotos: builder.query({
             query: () => ({
-                url: 'albums',
+                url: 'photos',
                 method: 'GET'
             })
         })
     })
 })
 
-export const { useGetAlbumsQuery } = albumsApi;
+export const { useGetPhotosQuery } = photosApi

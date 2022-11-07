@@ -1,70 +1,63 @@
-# Getting Started with Create React App
+## rtk-query
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+#### 1. API Slice 생성
 
-## Available Scripts
+```
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
-In the project directory, you can run:
+export const postsApi = createApi({
+  reducerPath: 'postsApi',
+  baseQuery: fetchBaseQuery({ baseUrl: 'https://jsonplaceholder.typicode.com/' }),
+  endpoints: (builder) => ({
+    getPosts: builder.query({
+      query: () => ({
+        url: 'posts',
+        method: 'GET'
+      })
+    })
+  })
+})
 
-### `npm start`
+export const { useGetPostsQuery } = postsApi
+```
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+#### 2. store에 서비스 추가
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+```
+export const store = configureStore({
+    reducer: {
+        [postsApi.reducerPath]: postsApi.reducer
+    },
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(postsApi.middleware)
+})
+```
 
-### `npm test`
+#### 3. Provider로 감싸기
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```
+import { Provider } from 'react-redux';
+import { store } from './store/store';
 
-### `npm run build`
+const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
+root.render(
+  <Provider store={store}>
+    <App />
+  </Provider>
+);
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+#### 4. 컴포넌트에서 쿼리 사용하기
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+#### - Queries
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+주로 GET 요청에 사용
 
-### `npm run eject`
+#### - Mutations
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+데이터 업데이트를 전달 (POST, PUT, DELETE, \*GET 요청도 가능)
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+##### → 참고
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+[https://redux-toolkit.js.org/rtk-query/overview](https://redux-toolkit.js.org/rtk-query/overview)  
+[https://velog.io/@regis100/RTK-Query](https://velog.io/@regis100/RTK-Query)  
+[https://junsangyu.gitbook.io/rtk-query](https://junsangyu.gitbook.io/rtk-query)
